@@ -1,0 +1,42 @@
+The issue you're encountering, where a â€” appears instead of a - (or more likely an em dash —), is typically caused by a mismatch in text encoding. Here's why this happens and how to fix it:
+
+Why It Happens
+Encoding Mismatch: The file you're reading is likely encoded in a format like UTF-8, but your Python script might be interpreting it using a different encoding (e.g., ASCII or Latin-1). This causes characters to be misinterpreted.
+Special Characters: The â€” sequence often appears when a UTF-8 encoded em dash (—) is misread as Latin-1 or Windows-1252 encoding.
+How to Fix It
+
+To resolve this, ensure you're reading the file with the correct encoding. Here's how:
+
+1. Specify Encoding When Opening the File
+
+Use the encoding parameter in Python's open() function to explicitly set the encoding to utf-8:
+
+Copy the code
+with open('your_file.txt', 'r', encoding='utf-8') as file:
+    content = file.read()
+
+2. Detect the File's Encoding
+
+If you're unsure of the file's encoding, you can use the chardet or charset-normalizer library to detect it:
+
+Copy the code
+import chardet
+
+with open('your_file.txt', 'rb') as file:
+    raw_data = file.read()
+    result = chardet.detect(raw_data)
+    encoding = result['encoding']
+
+with open('your_file.txt', 'r', encoding=encoding) as file:
+    content = file.read()
+
+3. Replace or Normalize Characters
+
+If the file contains unexpected characters, you can replace or normalize them:
+
+Copy the code
+content = content.replace('â€”', '—')  # Replace misinterpreted characters
+
+Key Takeaway
+
+Always ensure the encoding used to read a file matches the encoding in which the file was saved. UTF-8 is a safe default for most modern text files.
