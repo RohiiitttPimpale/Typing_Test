@@ -55,9 +55,9 @@ window.minsize(width=500, height=100)
 count_label = Label(text="Timer : 0",font=("Arial", 20, "bold"))
 count_label.grid(row=0,column=0)
 
-with open(file="text.txt", mode="r") as data:
+with open(file="text.txt", mode="r", encoding='utf-8') as data:
     text = data.readlines()                                        #here there is problem of - sign instead of geting - it get â€”.
-    text_lis = random.choice(text).replace("â€”", "-").split(" ")  # or using encoding='utf-8' in open.
+    text_lis = random.choice(text).replace("—", "-").split(" ")  # or using encoding='utf-8' in open.
 TEXT = get_text()
 sample = Label(text=TEXT, font=("Arial", 20, "bold"))
 sample.grid(row=1,column=0,columnspan=100)
